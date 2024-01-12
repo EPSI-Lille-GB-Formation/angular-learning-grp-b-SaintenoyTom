@@ -32,6 +32,7 @@ export class TodoListComponent {
   }
   ngOnInit(): void{
     this.todoService.getTodoList().subscribe(todos => this.todoList = todos)
+    this.todoService.getTodoById(5).subscribe(todo => console.log(todo))
   }
   onClickTodo(): void{
     this.completedFiler=false;
