@@ -33,8 +33,9 @@ export class TodoService {
     )
   }
 
-  deleteTodo(todoId: number): Observable<Todo> {
-    return this.http.delete<Todo>(`${this.todosUrl}/${todoId}`).pipe(
+  deleteTodo(todoId: number){
+    return this.http.delete(`${this.todosUrl}/${todoId}`).pipe(
+      tap(response => console.log(response)),
       catchError(error => {
         console.log(error);
         return of();

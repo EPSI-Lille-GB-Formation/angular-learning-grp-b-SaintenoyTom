@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TodobordureDirective } from '../todobordure.directive';
 import { Todo } from '../todo';
-import { FormsModule } from '@angular/forms';
-import {TODOS} from "../mock-todo"
 import { Router } from '@angular/router';
+import { TodoService } from '../todo.service';
 
 @Component({
   selector: 'app-todo',
@@ -20,7 +19,7 @@ import { Router } from '@angular/router';
           <div class = "action">
           <a href="#">Edit</a>
             <a (click)="goToTaskDetail()">View</a>
-            <a href="#" (click)="deleteTodo()">Delete</a>
+            <a href="#" (click)="deleteTodo($event)">Delete</a>
         </div>
         </div>
         </article>
@@ -43,15 +42,20 @@ export class TodoComponent {
   checkboxValue!: boolean
 
   constructor(
-    private router: Router
+    private router: Router, private todoService: TodoService
   ){}
+
+  @Output()
+  deleteTodoEvent = new EventEmitter<string>();
 
   @Input("listTodo")
   todoList!:Todo[]
 
-  deleteTodo(){
+  deleteTodo(event: Event){
+    event.preventDefault()
     if (this.todo){
-      TODOS.splice(this.todoList.indexOf(this.todo),1)
+    this.todoService.deleteTodo(this.todo.id).subscribe(todo => console.log(todo))
+    this.deleteTodoEvent.emit()
     }
   }
 

@@ -45,8 +45,8 @@ export class TodoListComponent {
   onClickTodoShowAll(){
     this.showAll = !this.showAll
   }
-  onClickTodoDelete(todoId: number) {
-    this.todoService.deleteTodo(todoId)
+  onDelete(todoId: number) {
+    this.todoService.getTodoList().subscribe(todos => this.todoList = todos)
   }
 
 }
