@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { TodobordureDirective } from '../todobordure.directive';
 import { Todo } from '../todo';
+import { FormsModule } from '@angular/forms';
+import {TODOS} from "../mock-todo"
 
 @Component({
   selector: 'app-todo',
@@ -16,7 +18,7 @@ import { Todo } from '../todo';
           </label>
           <div class = "action">
             <a href="#">Edit</a>
-            <a href="#">Delete</a>
+            <a href="#" (click)="deleteTodo()">Delete</a>
         </div>
         </div>
         </article>
@@ -35,5 +37,13 @@ import { Todo } from '../todo';
 })
 export class TodoComponent {
   @Input("value")
-  todo: Todo | undefined
+  todo!: Todo
+  checkboxValue!: boolean
+
+  @Input("listTodo")
+  todoList!:Todo[]
+
+  deleteTodo(){
+    TODOS.splice(this.todoList.indexOf(this.todo),1)
+  }
 }
