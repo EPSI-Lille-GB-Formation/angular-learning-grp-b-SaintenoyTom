@@ -10,7 +10,7 @@ import { TodoListComponent } from './todo-list/todo-list.component';
   imports: [CommonModule, RouterOutlet, TodoListComponent],
   template: `
     <div class="container">
-      <todo-list />
+      <router-outlet></router-outlet>
     </div>
   `,
   styles: []

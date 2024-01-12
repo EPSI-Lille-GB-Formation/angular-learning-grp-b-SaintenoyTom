@@ -32,4 +32,13 @@ export class TodoService {
       })
     )
   }
+
+  deleteTodo(todoId: number): Observable<Todo> {
+    return this.http.delete<Todo>(`${this.todosUrl}/${todoId}`).pipe(
+      catchError(error => {
+        console.log(error);
+        return of();
+      })
+    )
+  }
 }
