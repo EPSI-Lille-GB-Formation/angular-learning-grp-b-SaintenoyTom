@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { TodobordureDirective } from '../todobordure.directive';
-import { TODOS } from '../mock-todo';
 import { TodoComponent } from '../todo/todo.component';
+import { TodoService } from '../todo.service';
+import { Todo } from '../todo';
 
 @Component({
   selector: 'todo-list',
@@ -11,9 +12,9 @@ import { TodoComponent } from '../todo/todo.component';
   imports: [CommonModule, TodoComponent, TodobordureDirective, RouterOutlet],
   template: `
   <h1>Liste des choses à faire</h1>
-        <a href="#" role="button" (click)="onClickTodo()">A faire</a>
-        <a href="#" role="button" (click)="onClickTodoCompleted()">Terminée</a>
-        <a href="#" role="button" (click)="onClickTodoShowAll()">Afficher tout</a>
+        <a href="#" role="button" [class.secondary]="!completedFiler && !showAll" (click)="onClickTodo()">A faire</a>
+        <a href="#" role="button" [class.secondary]="completedFiler && !showAll" (click)="onClickTodoCompleted()">Terminée</a>
+        <a href="#" role="button" [class.secondary]="showAll" (click)="onClickTodoShowAll()">Afficher tout</a>
         <ng-container  *ngFor="let todo of todoList">
           <app-todo [value]="todo" [listTodo]="todoList" *ngIf="(todo.isCompleted == completedFiler) || (showAll)" />
         </ng-container>
@@ -23,17 +24,22 @@ import { TodoComponent } from '../todo/todo.component';
 `]
 })
 export class TodoListComponent {
-  todoList = TODOS;
+  todoList:Todo[] = [];
   completedFiler = false;
   showAll=false;
-  constructor(){
+  constructor(private todoService: TodoService){
     console.table(this.todoList);
   }
-  onClickTodo(){
-    this.completedFiler=false;
+  ngOnInit(): void{
+    this.todoService.getTodoList().subscribe(todos => this.todoList = todos)
   }
-  onClickTodoCompleted(){
+  onClickTodo(): void{
+    this.completedFiler=false;
+    this.showAll = false;
+  }
+  onClickTodoCompleted(): void{
     this.completedFiler = true;
+    this.showAll = false;
   }
   onClickTodoShowAll(){
     this.showAll = !this.showAll

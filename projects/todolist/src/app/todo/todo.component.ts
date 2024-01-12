@@ -37,13 +37,15 @@ import {TODOS} from "../mock-todo"
 })
 export class TodoComponent {
   @Input("value")
-  todo!: Todo
+  todo!: Todo | undefined
   checkboxValue!: boolean
 
   @Input("listTodo")
   todoList!:Todo[]
 
   deleteTodo(){
-    TODOS.splice(this.todoList.indexOf(this.todo),1)
+    if (this.todo){
+      TODOS.splice(this.todoList.indexOf(this.todo),1)
+    }
   }
 }
