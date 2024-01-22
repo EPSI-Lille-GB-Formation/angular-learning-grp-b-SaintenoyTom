@@ -188,6 +188,99 @@
           }
         }
       }
+    },
+    "bibliotech": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/bibliotech",
+      "sourceRoot": "projects/bibliotech/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/bibliotech",
+            "index": "projects/bibliotech/src/index.html",
+            "browser": "projects/bibliotech/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "projects/bibliotech/tsconfig.app.json",
+            "assets": [
+              "projects/bibliotech/src/favicon.ico",
+              "projects/bibliotech/src/assets"
+            ],
+            "styles": [
+              "projects/bibliotech/src/styles.css"
+            ],
+            "scripts": [],
+            "server": "projects/bibliotech/src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "projects/bibliotech/server.ts"
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "bibliotech:build:production"
+            },
+            "development": {
+              "buildTarget": "bibliotech:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "bibliotech:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/bibliotech/tsconfig.spec.json",
+            "assets": [
+              "projects/bibliotech/src/favicon.ico",
+              "projects/bibliotech/src/assets"
+            ],
+            "styles": [
+              "projects/bibliotech/src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
     }
   },
   "cli": {
