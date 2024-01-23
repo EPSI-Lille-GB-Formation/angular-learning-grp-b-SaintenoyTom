@@ -1,6 +1,6 @@
 import { Users } from "./users";
 
-export const USERS: Users [] = [
+export const USERS: Users[] = [
     {
         id:1,
         firstname:"Victor",
@@ -25,4 +25,4 @@ export const USERS: Users [] = [
         password: "RoroPaté",
         role: "admin"
     },
-]
+];
