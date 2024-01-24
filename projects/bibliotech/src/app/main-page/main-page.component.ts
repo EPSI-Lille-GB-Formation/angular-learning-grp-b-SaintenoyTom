@@ -23,7 +23,7 @@ import { Book } from '../book';
 
   `,
   styleUrl: './main-page.component.css',
-  providers: [BookService]
+  providers: [BookService, LoginService]
 })
 export class MainPageComponent {
   books: Book[] = [];
@@ -35,14 +35,6 @@ export class MainPageComponent {
       // L'utilisateur n'est pas connecté, redirige vers la page de connexion
       this.router.navigate(['/login']);
     }else{
-      this.bookService.getBooks().subscribe(
-        (books) => {
-          this.books = books;
-        },
-        (error) => {
-          console.error('Erreur lors de la récupération des livres :', error);
-        }
-      );
     }
   }
 

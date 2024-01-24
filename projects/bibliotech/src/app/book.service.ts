@@ -1,17 +1,24 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Book } from './book';
+import { HttpClient } from '@angular/common/http';
+import { Observable, catchError, tap } from 'rxjs';
+import { Book } from './book'
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
-  private bookUrl = 'api/books';
+  private userUrl = '/api/BOOKS'; // Utilise le même chemin que dans l'API simulée
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getBooks(): Observable<Book[]>{
-    return this.http.get<Book[]>(this.bookUrl)
+  getBooks(): Observable<Book[]> {
+    console.log('BookService - Tentative de récupération des utilisateurs depuis l\'API...');
+    return this.http.get<Book[]>(this.userUrl).pipe(
+      tap(bookList => console.log('UserService - Utilisateurs récupérés :', bookList)),
+      catchError(error => {
+        console.error('UserService - Erreur lors de la récupération des utilisateurs :', error);
+        throw error;
+      })
+    );
   }
 }
