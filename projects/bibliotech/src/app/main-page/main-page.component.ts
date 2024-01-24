@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
+import { BookService } from '../book.service';
+import { Book } from '../book';
 
 @Component({
   selector: 'app-main-page',
@@ -18,17 +20,29 @@ import { Router } from '@angular/router';
     <button (click)="logout()">Se déconnecter</button>
   </div>
 </div>
-  `,
-  styleUrl: './main-page.component.css'
-})
-export class MainPageComponent implements OnInit {
 
-  constructor(private router: Router, private loginService: LoginService){}
+  `,
+  styleUrl: './main-page.component.css',
+  providers: [BookService]
+})
+export class MainPageComponent {
+  books: Book[] = [];
+
+  constructor(private router: Router, private loginService: LoginService, private bookService: BookService){}
 
   ngOnInit(): void {
     if (!this.loginService.getIsLogged()) {
       // L'utilisateur n'est pas connecté, redirige vers la page de connexion
       this.router.navigate(['/login']);
+    }else{
+      this.bookService.getBooks().subscribe(
+        (books) => {
+          this.books = books;
+        },
+        (error) => {
+          console.error('Erreur lors de la récupération des livres :', error);
+        }
+      );
     }
   }
 

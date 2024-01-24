@@ -1,6 +1,6 @@
-// auth.service.ts
 import { Injectable } from '@angular/core';
-import { USERS } from './mock-users';
+import { UserService } from './user.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -8,15 +8,31 @@ import { USERS } from './mock-users';
 export class LoginService {
     private isLogged: boolean = !!localStorage.getItem('isLogged');
 
-    constructor(){
-        localStorage.removeItem('isLogged');
+    constructor(private userService: UserService, private router: Router){
     }
 
-    authenticate(email: string, password: string): boolean {
-        const user = USERS.find(u => u.email === email && u.password === password);
-        this.isLogged = !!user;
-        localStorage.setItem('isLogged', this.isLogged ? 'true' : 'false');
-        return this.isLogged;
+    async authenticate(email: string, password: string): Promise<boolean> {
+        try{
+            const users = await this.userService.getUsers().toPromise();
+            if (!users) {
+                console.error('La liste des utilisateurs est indéfinie.');
+                return false;
+              }
+            console.log('LoginService - Utilisateurs reçus du service :', users);
+            const isUserAuthenticated = users.some(u => u.email === email && u.password === password);
+            if (isUserAuthenticated) {
+                console.log('Utilisateur authentifié.', isUserAuthenticated);
+              } else {
+                console.log('Identifiants incorrects.');
+              }
+            this.isLogged = isUserAuthenticated;;
+            localStorage.setItem('isLogged', this.isLogged ? 'true' : 'false');
+            console.log('État d\'authentification après connexion :', this.isLogged);
+            return this.isLogged;
+            }catch (error){
+                console.error('Erreur lors de l\'authentification :', error)
+                throw error;
+            }
     }
 
     getIsLogged(): boolean{
@@ -24,10 +40,8 @@ export class LoginService {
     }
 
     logout(): void {
-        console.log('Avant déconnexion - isAuthenticated:', this.isLogged, localStorage.getItem('isLogged'));
         this.isLogged = false;
-        localStorage.setItem('isLogged', 'false');
-        console.log('Après déconnexion - isAuthenticated:', this.isLogged,localStorage.getItem('isLogged')) ;
+        localStorage.removeItem('isLogged');
       }
 
 }

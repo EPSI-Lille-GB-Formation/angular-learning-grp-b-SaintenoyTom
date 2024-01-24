@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { TODOS } from './mock-todo';
 import { TodoListComponent } from './todo-list/todo-list.component';
 
 @Component({

@@ -7,5 +7,5 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent},
     { path: 'main-page', component: MainPageComponent},
     { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: '**', redirectTo: '/connexion' } // Gestion des routes inconnues
+    { path: '**', redirectTo: '/login' } // Gestion des routes inconnues
 ];

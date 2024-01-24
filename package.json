@@ -9,7 +9,8 @@
     "test": "ng test",
     "serve:ssr:todolist": "node dist/todolist/server/server.mjs",
     "serve:ssr:sandbox": "node dist/sandbox/server/server.mjs",
-    "serve:ssr:bibliotech": "node dist/bibliotech/server/server.mjs"
+    "serve:ssr:bibliotech": "node dist/bibliotech/server/server.mjs",
+    "serve:ssr:my-test-project": "node dist/my-test-project/server/server.mjs"
   },
   "private": true,
   "dependencies": {
@@ -22,7 +23,7 @@
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/platform-server": "^17.0.0",
     "@angular/router": "^17.0.0",
-    "@angular/ssr": "^17.0.5",
+    "@angular/ssr": "^17.0.6",
     "@picocss/pico": "^1.5.11",
     "express": "^4.18.2",
     "rxjs": "~7.8.0",
