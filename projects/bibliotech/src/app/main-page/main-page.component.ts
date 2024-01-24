@@ -4,6 +4,7 @@ import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
 import { BookService } from '../book.service';
 import { Book } from '../book';
+import { error } from 'console';
 
 @Component({
   selector: 'app-main-page',
@@ -14,10 +15,17 @@ import { Book } from '../book';
   <h1>Bienvenue sur la page principale</h1>
 
   <div *ngIf="isLogged;">
-    <!-- Contenu affiché lorsque l'utilisateur est connecté -->
     <p>Vous êtes connecté. Bienvenue!</p>
-    <!-- Ajoute d'autres éléments pour un utilisateur connecté -->
     <button (click)="logout()">Se déconnecter</button>
+    <div *ngIf="booksList.length > 0">
+    <h3>Liste des livres :</h3>
+    <ul>
+      <li *ngFor="let book of booksList">{{ book.title }}</li>
+    </ul>
+  </div>
+  <div *ngIf="booksList.length === 0">
+    <p>Aucun livre disponible.</p>
+  </div>
   </div>
 </div>
 
@@ -26,15 +34,22 @@ import { Book } from '../book';
   providers: [BookService, LoginService]
 })
 export class MainPageComponent {
-  books: Book[] = [];
+  booksList: Book[] = [];
 
   constructor(private router: Router, private loginService: LoginService, private bookService: BookService){}
 
   ngOnInit(): void {
     if (!this.loginService.getIsLogged()) {
-      // L'utilisateur n'est pas connecté, redirige vers la page de connexion
       this.router.navigate(['/login']);
     }else{
+      this.bookService.getBooks().subscribe(
+        books => {
+          this.booksList = books;
+        },
+        error => {
+          console.error('Erreur lors de la récupération des livres :', error);
+        }
+      );
     }
   }
 

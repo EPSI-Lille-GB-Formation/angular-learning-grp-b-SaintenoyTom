@@ -13,9 +13,8 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<Users[]> {
-    console.log('UserService - Tentative de récupération des utilisateurs depuis l\'API...');
     return this.http.get<Users[]>(this.userUrl).pipe(
-      tap(userList => console.log('UserService - Utilisateurs récupérés :', userList)),
+      tap(userList => console.log('UserService - Utilisateurs récupérés')),
       catchError(error => {
         console.error('UserService - Erreur lors de la récupération des utilisateurs :', error);
         throw error;

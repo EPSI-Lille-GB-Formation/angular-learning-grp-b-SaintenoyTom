@@ -8,10 +8,6 @@ import { BOOKS } from './mock-book';
 })
 export class InMemoryDataService implements InMemoryDbService {
 
-  constructor(){
-    console.log('InMemoryDataService - constructor called');
-  }
-
   createDb(){
     return { USERS, BOOKS };
   }

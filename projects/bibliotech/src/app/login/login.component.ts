@@ -34,10 +34,16 @@ export class LoginComponent {
 
   constructor(private router: Router, private loginService: LoginService, private userService: UserService){}
 
+  ngOnInit(): void {
+    if (this.loginService.getIsLogged()) {
+      this.router.navigate(['/main-page']);
+    }else{
+    }
+  }
+
   async login(){
     const isAuthenticated = await this.loginService.authenticate(this.email, this.password);
     if (isAuthenticated){
-      console.log('Redirection vers la page principale.');
       this.router.navigate(['/main-page']);
     }else{
       this.errorMessage = 'Identifiants incorrects. Veuillez réessayer.';

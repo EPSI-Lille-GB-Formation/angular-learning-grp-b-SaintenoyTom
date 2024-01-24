@@ -18,17 +18,14 @@ export class LoginService {
                 console.error('La liste des utilisateurs est indéfinie.');
                 return false;
               }
-            console.log('LoginService - Utilisateurs reçus du service :', users);
+
             const isUserAuthenticated = users.some(u => u.email === email && u.password === password);
-            if (isUserAuthenticated) {
-                console.log('Utilisateur authentifié.', isUserAuthenticated);
-              } else {
-                console.log('Identifiants incorrects.');
-              }
+
             this.isLogged = isUserAuthenticated;;
             localStorage.setItem('isLogged', this.isLogged ? 'true' : 'false');
-            console.log('État d\'authentification après connexion :', this.isLogged);
+            
             return this.isLogged;
+
             }catch (error){
                 console.error('Erreur lors de l\'authentification :', error)
                 throw error;

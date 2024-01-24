@@ -7,7 +7,7 @@ import { Book } from './book'
   providedIn: 'root'
 })
 export class BookService {
-  private userUrl = '/api/BOOKS'; // Utilise le même chemin que dans l'API simulée
+  private userUrl = '/api/BOOKS'; 
 
   constructor(private http: HttpClient) {}
 
