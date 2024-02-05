@@ -31,7 +31,7 @@ export class LoginService {
               };
               localStorage.setItem('user_logged', JSON.stringify(currentUserForStock));
               this.isLogged = true;
-            localStorage.setItem('isLogged', this.isLogged ? 'true' : 'false');
+              localStorage.setItem('isLogged', this.isLogged ? 'true' : 'false');
             }else{
               this.isLogged = false;
               localStorage.setItem('isLogged', this.isLogged ? 'true' : 'false');

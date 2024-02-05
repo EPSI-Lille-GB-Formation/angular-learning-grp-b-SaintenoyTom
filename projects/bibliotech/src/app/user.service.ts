@@ -9,7 +9,6 @@ import { Users } from './users';
 })
 export class UserService {
   private userUrl = '/api/USERS'; // Utilise le même chemin que dans l'API simulée
-  private currentUser: Users | null = null;
 
   constructor(private http: HttpClient) {
   }
@@ -24,8 +23,19 @@ export class UserService {
     );
   }
 
+  getUserById(userId: string): Observable<Users> {
+    const url = `${this.userUrl}/${userId}`;
+    return this.http.get<Users>(url).pipe(
+      catchError((error) => {
+        console.error('Erreur lors de la récupération des détails de l\'utilisateur :', error);
+        throw error;
+      })
+    );
+  }
+
   getCurrentUserFromLocalStorage(): Users | null {
     const userString = localStorage.getItem('user_logged');
+    localStorage.removeItem('user_logged');
     return userString ? JSON.parse(userString) : null;
   }
 }

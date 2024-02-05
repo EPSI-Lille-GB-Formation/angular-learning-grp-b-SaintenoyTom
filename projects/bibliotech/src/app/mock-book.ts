@@ -14,7 +14,7 @@ export const BOOKS: Book [] = [
         createdAt: new Date(),
         updatedAt: null,
         categorie: [CATEGORIES[1]],
-        auteur: USERS[1],
+        auteur: USERS[0],
     },
     {
         id: 2,
@@ -24,7 +24,7 @@ export const BOOKS: Book [] = [
         createdAt: new Date(),
         updatedAt: null,
         categorie: [CATEGORIES[1]],
-        auteur: USERS[1],
+        auteur: USERS[0],
     },
     {
         id: 3,
@@ -34,7 +34,7 @@ export const BOOKS: Book [] = [
         createdAt: new Date(),
         updatedAt: null,
         categorie: [CATEGORIES[1]],
-        auteur: USERS[1],
+        auteur: USERS[0],
     },
     {
         id: 4,
@@ -44,7 +44,7 @@ export const BOOKS: Book [] = [
         createdAt: new Date(),
         updatedAt: null,
         categorie: [CATEGORIES[1]],
-        auteur: USERS[1],
+        auteur: USERS[0],
     },
     {
         id: 5,
@@ -54,7 +54,7 @@ export const BOOKS: Book [] = [
         createdAt: new Date(),
         updatedAt: null,
         categorie: [CATEGORIES[1]],
-        auteur: USERS[1],
+        auteur: USERS[0],
     },
     {
         id: 6,
@@ -64,7 +64,7 @@ export const BOOKS: Book [] = [
         createdAt: new Date(),
         updatedAt: null,
         categorie: [CATEGORIES[1]],
-        auteur: USERS[1],
+        auteur: USERS[0],
     },
     {
         id: 7,
@@ -74,7 +74,7 @@ export const BOOKS: Book [] = [
         createdAt: new Date(),
         updatedAt: null,
         categorie: [CATEGORIES[1]],
-        auteur: USERS[1],
+        auteur: USERS[0],
     },
     {
         id: 8,
@@ -84,7 +84,7 @@ export const BOOKS: Book [] = [
         createdAt: new Date(),
         updatedAt: null,
         categorie: [CATEGORIES[1]],
-        auteur: USERS[1],
+        auteur: USERS[0],
     },
     {
         id: 9,
@@ -94,7 +94,7 @@ export const BOOKS: Book [] = [
         createdAt: new Date(),
         updatedAt: null,
         categorie: [CATEGORIES[1]],
-        auteur: USERS[1],
+        auteur: USERS[0],
     },
     {
         id: 10,
@@ -104,6 +104,6 @@ export const BOOKS: Book [] = [
         createdAt: new Date(),
         updatedAt: null,
         categorie: [CATEGORIES[1]],
-        auteur: USERS[1],
+        auteur: USERS[0],
     },
 ]

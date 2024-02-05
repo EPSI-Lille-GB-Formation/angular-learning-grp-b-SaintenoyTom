@@ -13,17 +13,24 @@ import { UserService } from '../user.service';
   imports: [CommonModule],
   template: `
   <div *ngIf="isLogged;" class='header'>
-  <p>{{currentUser?.firstname}} {{currentUser?.lastname}}</p>
+  <a (click)="userPage()" >{{currentUser?.firstname}} {{currentUser?.lastname}}</a>
   <button (click)="logout()">Se déconnecter</button>
   </div>
   <div *ngIf="!isLogged;" class='header'>
-  <button (click)="login()">Se connecter</button>
+  <button (click)="logout()">Se connecter</button>
   </div>
     <div *ngIf="booksList.length > 0" class = 'container'>
     <h1>Biblio'tech</h1>
     <h3>Liste des livres :</h3>
     <ul>
-      <li *ngFor="let book of booksList">{{ book.title }}</li>
+      <li *ngFor="let book of booksList">
+      <h4>{{ book.title }}</h4>
+      <img *ngIf="book.image" [src]="'../assets/' + book.image" alt="{{ book.title }} Image">
+      <p *ngIf="book.resume">{{ book.resume }}</p>
+      <button *ngIf="isLogged && ((currentUser && book.auteur.firstname === currentUser.firstname && book.auteur.lastname === currentUser.lastname) || (currentUser && currentUser.role === 'admin'))">Modifier</button>
+      <button *ngIf="isLogged && ((currentUser && book.auteur.firstname === currentUser.firstname && book.auteur.lastname === currentUser.lastname) || (currentUser && currentUser.role === 'admin'))">Supprimer</button>
+      <button *ngIf="isLogged">Consulter</button>
+    </li>
     </ul>
   </div>
   <div *ngIf="booksList.length === 0">
@@ -63,7 +70,13 @@ export class MainPageComponent {
     this.router.navigate(['/login']);
   }
 
-  login(): void {
-    this.router.navigate(['/login']);
+  userPage(): void {
+    if(this.currentUser?.role === "user"){
+      this.router.navigate(['/user-page', this.currentUser?.id]);
+    }else{
+      this.router.navigate(['/administration']);
+    }
+    
   }
+
 }
