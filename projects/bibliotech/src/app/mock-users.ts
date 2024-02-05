@@ -6,7 +6,7 @@ export const USERS: Users[] = [
         firstname:"Victor",
         lastname:"Hugo",
         email:"VictorHugo@yahoo.fr",
-        password: "ViviHugo",
+        password: "1234",
         role: "user"
     },
     {
@@ -22,7 +22,7 @@ export const USERS: Users[] = [
         firstname:"Robert",
         lastname:"Paté",
         email:"PatéRobert@gmail.com",
-        password: "RoroPaté",
-        role: "admin"
+        password: "1234",
+        role: "user"
     },
 ];

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { LoginService } from './login.service';
 import { UserService } from './user.service';
+import { BookService } from './book.service';
+
 
 @Component({
     selector: 'app-root',
@@ -14,7 +16,7 @@ import { UserService } from './user.service';
     `,
     styleUrl: './app.component.css',
     imports: [CommonModule, RouterOutlet],
-    providers: [LoginService, UserService],
+    providers: [LoginService, UserService, BookService],
 })
 export class AppComponent {
 }

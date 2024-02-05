@@ -1,23 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
 import { BookService } from '../book.service';
 import { Book } from '../book';
-import { error } from 'console';
+import { Users } from '../users';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
   imports: [CommonModule],
   template: `
-  <div>
-  <h1>Bienvenue sur la page principale</h1>
-
-  <div *ngIf="isLogged;">
-    <p>Vous êtes connecté. Bienvenue!</p>
-    <button (click)="logout()">Se déconnecter</button>
-    <div *ngIf="booksList.length > 0">
+  <div *ngIf="isLogged;" class='header'>
+  <p>{{currentUser?.firstname}} {{currentUser?.lastname}}</p>
+  <button (click)="logout()">Se déconnecter</button>
+  </div>
+  <div *ngIf="!isLogged;" class='header'>
+  <button (click)="login()">Se connecter</button>
+  </div>
+    <div *ngIf="booksList.length > 0" class = 'container'>
+    <h1>Biblio'tech</h1>
     <h3>Liste des livres :</h3>
     <ul>
       <li *ngFor="let book of booksList">{{ book.title }}</li>
@@ -26,22 +29,21 @@ import { error } from 'console';
   <div *ngIf="booksList.length === 0">
     <p>Aucun livre disponible.</p>
   </div>
-  </div>
-</div>
+
 
   `,
   styleUrl: './main-page.component.css',
-  providers: [BookService, LoginService]
+  providers: [LoginService, BookService, UserService]
 })
 export class MainPageComponent {
   booksList: Book[] = [];
+  currentUser: Users | null = null;
 
-  constructor(private router: Router, private loginService: LoginService, private bookService: BookService){}
+  constructor(private router: Router, private loginService: LoginService, private bookService: BookService, private userService: UserService){
+  }
 
-  ngOnInit(): void {
-    if (!this.loginService.getIsLogged()) {
-      this.router.navigate(['/login']);
-    }else{
+  async ngOnInit() {
+    this.currentUser = this.userService.getCurrentUserFromLocalStorage();
       this.bookService.getBooks().subscribe(
         books => {
           this.booksList = books;
@@ -50,7 +52,6 @@ export class MainPageComponent {
           console.error('Erreur lors de la récupération des livres :', error);
         }
       );
-    }
   }
 
   get isLogged(): boolean{
@@ -59,6 +60,10 @@ export class MainPageComponent {
 
   logout(): void {
     this.loginService.logout();
+    this.router.navigate(['/login']);
+  }
+
+  login(): void {
     this.router.navigate(['/login']);
   }
 }

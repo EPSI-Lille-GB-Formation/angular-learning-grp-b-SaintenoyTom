@@ -12,9 +12,8 @@ export class BookService {
   constructor(private http: HttpClient) {}
 
   getBooks(): Observable<Book[]> {
-    console.log('BookService - Tentative de récupération des utilisateurs depuis l\'API...');
     return this.http.get<Book[]>(this.userUrl).pipe(
-      tap(bookList => console.log('UserService - Utilisateurs récupérés :', bookList)),
+      tap(bookList => console.log('BookService - Livres récupérés')),
       catchError(error => {
         console.error('UserService - Erreur lors de la récupération des utilisateurs :', error);
         throw error;
