@@ -15,9 +15,24 @@ export class BookService {
     return this.http.get<Book[]>(this.userUrl).pipe(
       tap(bookList => console.log('BookService - Livres récupérés')),
       catchError(error => {
-        console.error('UserService - Erreur lors de la récupération des utilisateurs :', error);
+        console.error('UserService - Erreur lors de la récupération des books :', error);
         throw error;
       })
     );
+  }
+
+  getBookById(bookId: string): Observable<Book> {
+    const url = `${this.userUrl}/${bookId}`;
+    return this.http.get<Book>(url).pipe(
+      catchError((error) => {
+        console.error('Erreur lors de la récupération des détails du livre :', error);
+        throw error;
+      })
+    );
+  }
+
+  updateBook(book: Book): Observable<void> {
+    const url = `${this.userUrl}/${book.id}`; // Construire l'URL pour la mise à jour du livre
+    return this.http.put<void>(url, book);
   }
 }

@@ -17,7 +17,7 @@ import { UserService } from '../user.service';
   <button (click)="logout()">Se déconnecter</button>
   </div>
   <div *ngIf="!isLogged;" class='header'>
-  <button (click)="logout()">Se connecter</button>
+  <button (click)="login()">Se connecter</button>
   </div>
     <div *ngIf="booksList.length > 0" class = 'container'>
     <h1>Biblio'tech</h1>
@@ -27,9 +27,13 @@ import { UserService } from '../user.service';
       <h4>{{ book.title }}</h4>
       <img *ngIf="book.image" [src]="'../assets/' + book.image" alt="{{ book.title }} Image">
       <p *ngIf="book.resume">{{ book.resume }}</p>
-      <button *ngIf="isLogged && ((currentUser && book.auteur.firstname === currentUser.firstname && book.auteur.lastname === currentUser.lastname) || (currentUser && currentUser.role === 'admin'))">Modifier</button>
-      <button *ngIf="isLogged && ((currentUser && book.auteur.firstname === currentUser.firstname && book.auteur.lastname === currentUser.lastname) || (currentUser && currentUser.role === 'admin'))">Supprimer</button>
-      <button *ngIf="isLogged">Consulter</button>
+        <div class = "action-buttons">
+          <button class="action-button" *ngIf="isLogged && ((currentUser && book.auteurId === currentUser.id) || (currentUser && currentUser.role === 'admin'))">Modifier</button>
+          <button class="action-button" *ngIf="isLogged && ((currentUser && book.auteurId === currentUser.id) || (currentUser && currentUser.role === 'admin'))">Supprimer</button>
+        </div>
+        <div class = "action-buttons2">
+          <button (click)="bookDetails(book.id)" class="action-button2" *ngIf="isLogged">Consulter</button>
+        </div>
     </li>
     </ul>
   </div>
@@ -51,6 +55,9 @@ export class MainPageComponent {
 
   async ngOnInit() {
     this.currentUser = this.userService.getCurrentUserFromLocalStorage();
+    if(!this.currentUser){
+      this.logout();
+    }
       this.bookService.getBooks().subscribe(
         books => {
           this.booksList = books;
@@ -67,6 +74,9 @@ export class MainPageComponent {
 
   logout(): void {
     this.loginService.logout();
+  }
+
+  login(): void{
     this.router.navigate(['/login']);
   }
 
@@ -76,7 +86,11 @@ export class MainPageComponent {
     }else{
       this.router.navigate(['/administration']);
     }
-    
+  }
+
+  bookDetails(bookId: number): void {
+    console.log("redirection");
+    this.router.navigate(['/book', bookId])
   }
 
 }

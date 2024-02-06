@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { Users } from '../users';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-administration',
@@ -8,5 +11,28 @@ import { Component } from '@angular/core';
   styleUrl: './administration.component.css'
 })
 export class AdministrationComponent {
+  user: Users | null = null;
 
+  constructor(private router: Router, private loginService: LoginService){}
+
+  ngOnInit(){
+    if(!this.isLogged){
+      this.router.navigate(['/main-page']);
+    }else{
+    }
+  }
+
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event: Event) {
+    this.return();
+  }
+
+  return(): void{
+    localStorage.setItem('user_logged', JSON.stringify(this.user));
+    this.router.navigate(['/main-page']);
+  }
+
+  get isLogged(): boolean{
+    return this.loginService.getIsLogged();
+  }
 }

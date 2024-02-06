@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { Router } from '@angular/router';
-import { Users } from './users';
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
     private isLogged: boolean = !!localStorage.getItem('isLogged');
+    
 
     constructor(private userService: UserService, private router: Router){
     }
@@ -19,8 +20,10 @@ export class LoginService {
                 console.error('La liste des utilisateurs est indéfinie.');
                 return false;
               }
-
-            const currentUser = users.find(u => u.email === email && u.password === password);
+              const hashedPassword = CryptoJS.SHA256(password).toString()
+              console.log(hashedPassword);
+            const currentUser = users.find(u => u.email === email && u.password === hashedPassword);
+            console.log(currentUser?.password);
             if (currentUser !== undefined) {
               const currentUserForStock = {
                 id: currentUser.id,

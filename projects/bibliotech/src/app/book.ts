@@ -10,7 +10,7 @@ export class Book {
         public createdAt: Date,
         public updatedAt: Date|null,
         public categorie: Categories[],
-        public auteur: Users
+        public auteurId: number
     )   {
             this.createdAt = new Date();
         }

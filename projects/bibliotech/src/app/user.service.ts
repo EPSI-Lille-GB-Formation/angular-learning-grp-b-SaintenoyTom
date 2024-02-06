@@ -1,8 +1,9 @@
 // user.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, tap } from 'rxjs';
+import { Observable, catchError, forkJoin, switchMap, tap } from 'rxjs';
 import { Users } from './users';
+import { BookService } from './book.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { Users } from './users';
 export class UserService {
   private userUrl = '/api/USERS'; // Utilise le même chemin que dans l'API simulée
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private bookService: BookService) {
   }
 
   getUsers(): Observable<Users[]> {
@@ -33,9 +34,14 @@ export class UserService {
     );
   }
 
-  getCurrentUserFromLocalStorage(): Users | null {
+  getCurrentUserFromLocalStorage(id?: string): Users | null {
     const userString = localStorage.getItem('user_logged');
     localStorage.removeItem('user_logged');
     return userString ? JSON.parse(userString) : null;
+  }
+
+  updateUser(user: Users): Observable<Users> {
+    const url = `${this.userUrl}/${user.id}`;
+    return this.http.put<Users>(url, user);
   }
 }

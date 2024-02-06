@@ -20,3 +20,43 @@
     height: 60px;
     padding: 0;
   }
+
+#button-div{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action-buttons{
+  display: flex;
+  margin-bottom: 5px;
+  justify-content: center;
+}
+
+.action-buttons2{
+  display: flex;
+  justify-content: center;
+}
+
+.action-button{
+  margin-left: 10px; /* Espace entre les boutons */
+  padding: 5px 10px; /* Taille du bouton */
+  font-size: 14px; /* Taille du texte */
+  width: 200px;
+
+}
+
+.action-button2{
+  margin-left: 10px; /* Espace entre les boutons */
+  padding: 5px 10px; /* Taille du bouton */
+  font-size: 14px; /* Taille du texte */
+  width: 400px;
+
+}
+
+.container{
+  text-align: center;
+}
+
+.container li {
+  list-style-type: none;
+}
