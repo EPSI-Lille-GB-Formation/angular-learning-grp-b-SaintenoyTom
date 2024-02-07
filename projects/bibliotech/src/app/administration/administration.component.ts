@@ -19,6 +19,7 @@ import { UserService } from '../user.service';
 })
 export class AdministrationComponent {
   currentUser: Users | null = null;
+  users: Users[] = [];
 
   constructor(private router: Router, private loginService: LoginService, private userService: UserService){}
 
@@ -26,6 +27,7 @@ export class AdministrationComponent {
     if(!this.isLogged){
       this.router.navigate(['/main-page']);
     }else{
+      this.loadUsers();
       this.currentUser = this.userService.getCurrentUserFromLocalStorage();
     }
   }
@@ -42,5 +44,17 @@ export class AdministrationComponent {
 
   get isLogged(): boolean{
     return this.loginService.getIsLogged();
+  }
+
+  loadUsers(): void {
+    this.userService.getUsers().subscribe(users => {
+      this.users = users;
+    });
+  }
+
+  deleteUser(userId: number): void {
+    this.userService.deleteUser(userId).subscribe(() => {
+      this.loadUsers(); // Recharger la liste des utilisateurs après la suppression
+    });
   }
 }
