@@ -13,9 +13,8 @@ export class BookService {
 
   getBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(this.userUrl).pipe(
-      tap(bookList => console.log('BookService - Livres récupérés')),
       catchError(error => {
-        console.error('UserService - Erreur lors de la récupération des books :', error);
+        console.error('BookService - Erreur lors de la récupération des books :', error);
         throw error;
       })
     );

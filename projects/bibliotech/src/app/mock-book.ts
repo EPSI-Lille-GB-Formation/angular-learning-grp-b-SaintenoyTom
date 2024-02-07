@@ -1,9 +1,4 @@
 import { Book } from "./book"
-import { Categories } from "./categories"
-import { CATEGORIES } from "./mock-categories"
-import { USERS } from "./mock-users"
-import { Users } from "./users"
-
 
 export const BOOKS: Book [] = [
     {
@@ -13,7 +8,7 @@ export const BOOKS: Book [] = [
         image: "Book1.png",
         createdAt: new Date(),
         updatedAt: null,
-        categorie: [CATEGORIES[1]],
+        categorieId: [1, 2, 3],
         auteurId: 1,
     },
     {
@@ -23,7 +18,7 @@ export const BOOKS: Book [] = [
         image: "Book2.png",
         createdAt: new Date(),
         updatedAt: null,
-        categorie: [CATEGORIES[1]],
+        categorieId: [2],
         auteurId: 1,
     },
     {
@@ -33,7 +28,7 @@ export const BOOKS: Book [] = [
         image: "Book3.png",
         createdAt: new Date(),
         updatedAt: null,
-        categorie: [CATEGORIES[1]],
+        categorieId: [2],
         auteurId: 1,
     },
     {
@@ -43,7 +38,7 @@ export const BOOKS: Book [] = [
         image: "Book4.png",
         createdAt: new Date(),
         updatedAt: null,
-        categorie: [CATEGORIES[1]],
+        categorieId: [2],
         auteurId: 1,
     },
     {
@@ -53,7 +48,7 @@ export const BOOKS: Book [] = [
         image: "Book5.png",
         createdAt: new Date(),
         updatedAt: null,
-        categorie: [CATEGORIES[1]],
+        categorieId: [2],
         auteurId: 1,
     },
     {
@@ -63,7 +58,7 @@ export const BOOKS: Book [] = [
         image: "Book6.png",
         createdAt: new Date(),
         updatedAt: null,
-        categorie: [CATEGORIES[1]],
+        categorieId: [2],
         auteurId: 1,
     },
     {
@@ -73,7 +68,7 @@ export const BOOKS: Book [] = [
         image: "Book7.png",
         createdAt: new Date(),
         updatedAt: null,
-        categorie: [CATEGORIES[1]],
+        categorieId: [2],
         auteurId: 1,
     },
     {
@@ -83,7 +78,7 @@ export const BOOKS: Book [] = [
         image: "Book8.png",
         createdAt: new Date(),
         updatedAt: null,
-        categorie: [CATEGORIES[1]],
+        categorieId: [2],
         auteurId: 1,
     },
     {
@@ -93,7 +88,7 @@ export const BOOKS: Book [] = [
         image: "Book9.png",
         createdAt: new Date(),
         updatedAt: null,
-        categorie: [CATEGORIES[1]],
+        categorieId: [2],
         auteurId: 3,
     },
     {
@@ -103,7 +98,7 @@ export const BOOKS: Book [] = [
         image: "Book10.png",
         createdAt: new Date(),
         updatedAt: null,
-        categorie: [CATEGORIES[1]],
+        categorieId: [2],
         auteurId: 3,
     },
 ]

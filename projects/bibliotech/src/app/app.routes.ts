@@ -12,6 +12,6 @@ export const routes: Routes = [
     { path: 'user-page/:id', component: UserPageComponent },
     { path: 'book/:id', component: BookComponent },
     { path: 'administration', component: AdministrationComponent },
-    { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: '**', redirectTo: '/login' } // Gestion des routes inconnues
+    { path: '', redirectTo: '/main-page', pathMatch: 'full' },
+    { path: '**', redirectTo: '/main-page' } // Gestion des routes inconnues
 ];

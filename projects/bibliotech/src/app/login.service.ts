@@ -20,10 +20,8 @@ export class LoginService {
                 console.error('La liste des utilisateurs est indéfinie.');
                 return false;
               }
-              const hashedPassword = CryptoJS.SHA256(password).toString()
-              console.log(hashedPassword);
+            const hashedPassword = CryptoJS.SHA256(password).toString()
             const currentUser = users.find(u => u.email === email && u.password === hashedPassword);
-            console.log(currentUser?.password);
             if (currentUser !== undefined) {
               const currentUserForStock = {
                 id: currentUser.id,

@@ -1,5 +1,3 @@
-import { Book } from "./book"
-
 export class Page {
     constructor(
         public id: number,
@@ -7,7 +5,7 @@ export class Page {
         public content: string,
         public createdAt: Date,
         public updatedAt: Date|null,
-        public book: Book
+        public bookId: number
     )   {
             this.createdAt = new Date();
         }

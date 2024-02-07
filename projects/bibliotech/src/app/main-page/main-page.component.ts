@@ -85,11 +85,12 @@ export class MainPageComponent {
       this.router.navigate(['/user-page', this.currentUser?.id]);
     }else{
       this.router.navigate(['/administration']);
+      localStorage.setItem('user_logged', JSON.stringify(this.currentUser));
     }
   }
 
   bookDetails(bookId: number): void {
-    console.log("redirection");
+    localStorage.setItem('user_logged', JSON.stringify(this.currentUser));
     this.router.navigate(['/book', bookId])
   }
 
