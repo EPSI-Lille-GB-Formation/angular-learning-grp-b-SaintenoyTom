@@ -13,6 +13,12 @@ import { UserService } from '../user.service';
   <div *ngIf="isLogged;" class='header'>
   <button (click)="return()">Retour</button>
   </div>
+  <div *ngFor="let user of users" style="display: flex; align-items: center;">
+  <p style="margin-right: 20px; margin-left: 10px;">{{ user.firstname }} {{ user.lastname }}</p>
+  <p style="margin-right: 20px; margin-left: 10px;">Rôle : {{user.role}}</p>
+  <button (click)="deleteUser(user.id)" style ="width: 200px; margin-right: 20px;">Supprimer</button>
+  <button (click)="editUser(user.id)" style ="width: 200px;">Editer</button>
+  </div>
   `,
   styleUrl: './administration.component.css',
   providers: [LoginService, UserService]
@@ -54,7 +60,17 @@ export class AdministrationComponent {
 
   deleteUser(userId: number): void {
     this.userService.deleteUser(userId).subscribe(() => {
-      this.loadUsers(); // Recharger la liste des utilisateurs après la suppression
+      this.loadUsers(); 
+      if(userId == this.currentUser?.id){
+        this.loginService.logout();
+        this.router.navigate(['/main-page']);
+      }
+      
     });
+  }
+
+  editUser(userId: number): void{
+    localStorage.setItem('user_logged', JSON.stringify(this.currentUser));
+    this.router.navigate(['/user-page', userId]);
   }
 }

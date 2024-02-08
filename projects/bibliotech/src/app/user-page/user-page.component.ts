@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginService } from '../login.service';
 import { BookService } from '../book.service';
 import { Book } from '../book';
-;
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-user-page',
@@ -33,6 +33,15 @@ import { Book } from '../book';
     <label for="editEmail">Email:</label>
     <input id="editEmail" [(ngModel)]="editableUser.email" *ngIf="editableUser"/>
 
+    <label for="editPassword">Nouveau mot de passe:</label>
+    <input id="editPassword" [(ngModel)]="editableUser.password" *ngIf="editableUser"/>
+
+    <label for="editRole" *ngIf="isCurrentUserAdmin() && editableUser">Rôle:</label>
+    <select id="editRole" [(ngModel)]="editableUser.role" *ngIf="isCurrentUserAdmin() && editableUser">
+      <option value="user">Utilisateur</option>
+      <option value="admin">Administrateur</option>
+    </select>
+
     <!-- Autres champs éditables -->
 
     <button (click)="saveChanges()">Enregistrer</button>
@@ -53,6 +62,7 @@ export class UserPageComponent {
   editableUser: Users | null = null;
   isEditing = false;
   booksList: Book[] = [];
+  currentUser: Users | null = null;
 
   constructor(private aRouter: ActivatedRoute, private userService: UserService, private loginService: LoginService, private router: Router, private bookService: BookService){}
 
@@ -79,6 +89,8 @@ export class UserPageComponent {
           (user) => {
             this.user = user;
             this.editableUser = { ...user };
+            this.editableUser.password = "";
+            this.currentUser = this.userService.getCurrentUserFromLocalStorage();
           },
           (error) => {
             console.error('Erreur lors de la récupération des détails de l\'utilisateur :', error);
@@ -101,12 +113,14 @@ export class UserPageComponent {
 
   saveChanges(): void {
     if (this.editableUser) {
-      // Appelle une méthode du service pour sauvegarder les modifications
+      this.editableUser.password = CryptoJS.SHA256(this.editableUser.password).toString();
       this.userService.updateUser(this.editableUser).subscribe(
         () => {
-          // Met à jour l'utilisateur affiché après la sauvegarde
-          this.user = this.editableUser ? { ...this.editableUser } : null;
+          this.user = this.editableUser ? { ...this.editableUser } : null;          
           this.isEditing = false;
+          if(this.user?.id === this.currentUser?.id){
+            this.currentUser = this.user;
+          }
         },
         (error) => {
           console.error('Erreur lors de la mise à jour de l\'utilisateur :', error);
@@ -120,8 +134,12 @@ export class UserPageComponent {
   }
 
   return(): void{
-    localStorage.setItem('user_logged', JSON.stringify(this.user));
+    localStorage.setItem('user_logged', JSON.stringify(this.currentUser));
     this.router.navigate(['/main-page']);
+  }
+
+  isCurrentUserAdmin() : boolean{
+    return this.currentUser?.role === 'admin';
   }
 
 }

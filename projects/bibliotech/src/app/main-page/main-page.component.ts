@@ -29,7 +29,7 @@ import { UserService } from '../user.service';
       <p *ngIf="book.resume">{{ book.resume }}</p>
         <div class = "action-buttons">
           <button class="action-button" *ngIf="isLogged && ((currentUser && book.auteurId === currentUser.id) || (currentUser && currentUser.role === 'admin'))">Modifier</button>
-          <button class="action-button" *ngIf="isLogged && ((currentUser && book.auteurId === currentUser.id) || (currentUser && currentUser.role === 'admin'))">Supprimer</button>
+          <button (click)="deleteBook(book.id)" class="action-button" *ngIf="isLogged && ((currentUser && book.auteurId === currentUser.id) || (currentUser && currentUser.role === 'admin'))">Supprimer</button>
         </div>
         <div class = "action-buttons2">
           <button (click)="bookDetails(book.id)" class="action-button2" *ngIf="isLogged">Consulter</button>
@@ -83,6 +83,7 @@ export class MainPageComponent {
   userPage(): void {
     if(this.currentUser?.role === "user"){
       this.router.navigate(['/user-page', this.currentUser?.id]);
+      localStorage.setItem('user_logged', JSON.stringify(this.currentUser));
     }else{
       this.router.navigate(['/administration']);
       localStorage.setItem('user_logged', JSON.stringify(this.currentUser));
@@ -93,5 +94,18 @@ export class MainPageComponent {
     localStorage.setItem('user_logged', JSON.stringify(this.currentUser));
     this.router.navigate(['/book', bookId])
   }
+
+  deleteBook(bookId: number): void {
+    this.bookService.deleteBook(bookId).subscribe(() => {
+      this.loadBooks(); 
+    });
+  }
+
+  loadBooks(): void {
+    this.bookService.getBooks().subscribe(books => {
+      this.booksList = books;
+    });
+  }
+
 
 }
