@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
+import { Users } from './users';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -56,4 +58,8 @@ export class LoginService {
         localStorage.removeItem('user_logged');
       }
 
-}
+      setIsLoggedToTrue(): void{
+        this.isLogged = true;
+      }
+  }
+

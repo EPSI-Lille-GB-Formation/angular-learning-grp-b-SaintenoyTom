@@ -1,7 +1,7 @@
 // user.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, forkJoin, switchMap, tap } from 'rxjs';
+import { Observable, catchError, forkJoin, map, switchMap, tap } from 'rxjs';
 import { Users } from './users';
 
 @Injectable({
@@ -47,4 +47,25 @@ export class UserService {
     const url = `${this.userUrl}/${userId}`;
     return this.http.delete<void>(url);
   }
+
+  register(user: any): Observable<any> {
+    const url = `${this.userUrl}/register`;
+    return this.http.post<any>(url, user).pipe(
+      catchError(error => {
+        console.error('Erreur lors de l\'enregistrement de l\'utilisateur :', error);
+        throw error;
+      })
+    );
+  }
+
+  getNextAvailableId(): Observable<number> {
+    return this.http.get<Users[]>(this.userUrl).pipe(
+      map(users => {
+        const maxId = users.reduce((max, user) => (user.id > max ? user.id : max), 0);
+        return maxId + 1;
+      })
+    );
+  }
+
+
 }

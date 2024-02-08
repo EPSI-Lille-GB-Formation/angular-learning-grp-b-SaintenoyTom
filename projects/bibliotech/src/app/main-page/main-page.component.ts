@@ -18,6 +18,7 @@ import { UserService } from '../user.service';
   </div>
   <div *ngIf="!isLogged;" class='header'>
   <button (click)="login()">Se connecter</button>
+  <button (click)="register()">S'inscrire</button>
   </div>
     <div *ngIf="booksList.length > 0" class = 'container'>
     <h1>Biblio'tech</h1>
@@ -107,5 +108,8 @@ export class MainPageComponent {
     });
   }
 
+  register(): void{
+    this.router.navigate(['/register']);
+  }
 
 }

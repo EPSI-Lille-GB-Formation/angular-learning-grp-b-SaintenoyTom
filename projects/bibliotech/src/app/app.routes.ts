@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { AdministrationComponent } from './administration/administration.component';
 import { BookComponent } from './book/book.component';
+import { RegisterComponent } from './register/register.component';
 
 
 export const routes: Routes = [
@@ -12,6 +13,7 @@ export const routes: Routes = [
     { path: 'user-page/:id', component: UserPageComponent },
     { path: 'book/:id', component: BookComponent },
     { path: 'administration', component: AdministrationComponent },
+    { path: 'register', component: RegisterComponent },
     { path: '', redirectTo: '/main-page', pathMatch: 'full' },
     { path: '**', redirectTo: '/main-page' } // Gestion des routes inconnues
 ];

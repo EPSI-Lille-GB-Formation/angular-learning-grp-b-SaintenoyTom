@@ -37,7 +37,6 @@ export class LoginComponent {
   ngOnInit(): void {
     if (this.loginService.getIsLogged()) {
       this.router.navigate(['/main-page']);
-    }else{
     }
   }
 
