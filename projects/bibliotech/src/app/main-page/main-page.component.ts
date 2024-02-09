@@ -6,6 +6,8 @@ import { BookService } from '../book.service';
 import { Book } from '../book';
 import { Users } from '../users';
 import { UserService } from '../user.service';
+import { PageService } from '../page.service';
+import { Page } from '../page';
 
 @Component({
   selector: 'app-main-page',
@@ -21,7 +23,8 @@ import { UserService } from '../user.service';
   <button (click)="register()">S'inscrire</button>
   </div>
     <div *ngIf="booksList.length > 0" class = 'container'>
-    <h1>Biblio'tech</h1>
+    <h1 style="margin-bottom: 10px;">Biblio'tech</h1>
+      <button *ngIf="isLogged" (click)="addBook()" style="width: 200px; text-align: center; margin: auto;">Ajouter un livre</button>
     <h3>Liste des livres :</h3>
     <ul>
       <li *ngFor="let book of booksList">
@@ -29,7 +32,7 @@ import { UserService } from '../user.service';
       <img *ngIf="book.image" [src]="book.image.startsWith('http') ? book.image : '../assets/' + book.image" alt="{{ book.title }} Image" class="max-image-size">
       <p *ngIf="book.resume">{{ book.resume }}</p>
         <div class = "action-buttons">
-          <button class="action-button" *ngIf="isLogged && ((currentUser && book.auteurId === currentUser.id) || (currentUser && currentUser.role === 'admin'))">Modifier</button>
+          <button (click)="editBook(book.id)" class="action-button" *ngIf="isLogged && ((currentUser && book.auteurId === currentUser.id) || (currentUser && currentUser.role === 'admin'))">Modifier</button>
           <button (click)="deleteBook(book.id)" class="action-button" *ngIf="isLogged && ((currentUser && book.auteurId === currentUser.id) || (currentUser && currentUser.role === 'admin'))">Supprimer</button>
         </div>
         <div class = "action-buttons2">
@@ -50,8 +53,9 @@ import { UserService } from '../user.service';
 export class MainPageComponent {
   booksList: Book[] = [];
   currentUser: Users | null = null;
+  pageList: Page[] = []
 
-  constructor(private router: Router, private loginService: LoginService, private bookService: BookService, private userService: UserService){
+  constructor(private router: Router, private loginService: LoginService, private bookService: BookService, private userService: UserService, private pageService: PageService){
   }
 
   async ngOnInit() {
@@ -61,7 +65,7 @@ export class MainPageComponent {
     }
       this.bookService.getBooks().subscribe(
         books => {
-          this.booksList = books;
+          this.booksList = books;         
         },
         error => {
           console.error('Erreur lors de la récupération des livres :', error);
@@ -98,6 +102,19 @@ export class MainPageComponent {
 
   deleteBook(bookId: number): void {
     this.bookService.deleteBook(bookId).subscribe(() => {
+      this.pageService.getPagesByBookId(bookId).subscribe(
+        (pages) => {
+            this.pageList = pages;
+            for (let page of this.pageList){
+              this.pageService.deletePage(page.id).subscribe(
+                () => {
+                },
+                (error) => {
+                  console.log('Erreur lors de la suppression des pages :', error);
+                });
+            }
+        }
+      )
       this.loadBooks(); 
     });
   }
@@ -112,4 +129,13 @@ export class MainPageComponent {
     this.router.navigate(['/register']);
   }
 
+  addBook(): void{
+    localStorage.setItem('user_logged', JSON.stringify(this.currentUser));
+    this.router.navigate(['/book/add']);
+  }
+
+  editBook(bookId: number): void{
+    localStorage.setItem('user_logged', JSON.stringify(this.currentUser));
+    this.router.navigate(['/book', bookId , 'modify']);
+  }
 }

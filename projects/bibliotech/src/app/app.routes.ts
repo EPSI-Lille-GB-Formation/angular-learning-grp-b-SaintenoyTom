@@ -6,12 +6,14 @@ import { AdministrationComponent } from './administration/administration.compone
 import { BookComponent } from './book/book.component';
 import { RegisterComponent } from './register/register.component';
 import { ModifyBookComponent } from './modify-book/modify-book.component';
+import { AddbookComponent } from './addbook/addbook.component';
 
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent},
     { path: 'main-page', component: MainPageComponent},
     { path: 'user-page/:id', component: UserPageComponent },
+    { path: 'book/add', component: AddbookComponent},
     { path: 'book/:id', component: BookComponent },
     { path: 'administration', component: AdministrationComponent },
     { path: 'register', component: RegisterComponent },

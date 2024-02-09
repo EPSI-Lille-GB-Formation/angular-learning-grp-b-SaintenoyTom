@@ -28,7 +28,7 @@ import { Users } from '../users';
   <div>
     <button *ngIf="this.currentUser?.id === this.book?.auteurId || this.currentUser?.role === 'admin'" (click)="editBook()">Modifier le livre</button>
   </div>
-  <div class="pages">
+  <div class="pages" *ngIf="pages && pages.length > 0">
     <p> {{this.pages[currentPageId].content}} </p>
   </div>
   <div class="navigation-buttons">

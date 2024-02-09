@@ -31,12 +31,16 @@ export class BookService {
   }
 
   updateBook(book: Book): Observable<void> {
-    const url = `${this.userUrl}/${book.id}`; // Construire l'URL pour la mise à jour du livre
+    const url = `${this.userUrl}/${book.id}`;
     return this.http.put<void>(url, book);
   }
 
   deleteBook(bookId: number): Observable<void> {
     const url = `${this.userUrl}/${bookId}`;
     return this.http.delete<void>(url);
+  }
+
+  addBook(newBook: Book): Observable<Book>{
+    return this.http.post<Book>(this.userUrl, newBook);
   }
 }

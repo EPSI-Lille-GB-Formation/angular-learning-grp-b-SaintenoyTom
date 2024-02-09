@@ -33,4 +33,17 @@ export class PageService {
       })
     );
   }
+
+  addPage(newPage: Page): Observable<Page>{
+    return this.http.post<Page>(this.userUrl, newPage);
+  }
+
+  deletePage(pageId: number): Observable<any> {
+    const url = `${this.userUrl}/${pageId}`;
+    return this.http.delete(url);
+  }
+
+  getPages(): Observable<Page[]> {
+    return this.http.get<Page[]>(this.userUrl)
+  }
 }
