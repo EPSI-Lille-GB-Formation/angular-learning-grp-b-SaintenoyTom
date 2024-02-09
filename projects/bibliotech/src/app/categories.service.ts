@@ -19,4 +19,13 @@ export class CategoriesService {
       })
     );
   }
+
+  addCategory(newCategory: Categories): Observable<Categories>{
+    return this.http.post<Categories>(this.userUrl, newCategory);
+  }
+
+  deleteCategory(categoryId: number): Observable<void> {
+    const url = `${this.userUrl}/${categoryId}`;
+    return this.http.delete<void>(url);
+  }
 }

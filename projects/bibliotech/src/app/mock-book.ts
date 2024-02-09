@@ -23,8 +23,8 @@ export const BOOKS: Book [] = [
     },
     {
         id: 3,
-        title: "Les Misérables",
-        resume: "L'action se déroule en France au cours du premier tiers du xixe siècle...",
+        title: "Les croustillons",
+        resume: "Une histoire de mixmax entre autres",
         image: "Book3.png",
         createdAt: new Date(),
         updatedAt: null,

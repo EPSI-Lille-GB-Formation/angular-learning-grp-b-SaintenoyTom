@@ -98,6 +98,9 @@ export class ModifyBookComponent{
       }
     )
     this.currentUser = this.userService.getCurrentUserFromLocalStorage();
+    if(!this.currentUser){
+      this.router.navigate(['/main-page'])
+    }
   }
 
   previousPage(): void {
@@ -115,10 +118,13 @@ export class ModifyBookComponent{
   cancelEditing(): void {
     this.loadBook(); 
     this.loadPages();
+    localStorage.setItem('user_logged', JSON.stringify(this.currentUser));
+    this.router.navigate(['/book', this.book?.id])
   }
 
   saveChanges(): void {
-    if(this.editableBook)
+    if(this.editableBook){
+    this.editableBook.updatedAt = new Date();
     this.bookService.updateBook(this.editableBook).subscribe(
       () => {
         if(this.editablePages)
@@ -136,6 +142,7 @@ export class ModifyBookComponent{
         console.error('Erreur lors de la sauvegarde des modifications :', error);
       }
     );
+    }
   }
 
   private loadBook(): void {
