@@ -26,7 +26,7 @@ import { UserService } from '../user.service';
     <ul>
       <li *ngFor="let book of booksList">
       <h4>{{ book.title }}</h4>
-      <img *ngIf="book.image" [src]="'../assets/' + book.image" alt="{{ book.title }} Image">
+      <img *ngIf="book.image" [src]="book.image.startsWith('http') ? book.image : '../assets/' + book.image" alt="{{ book.title }} Image" class="max-image-size">
       <p *ngIf="book.resume">{{ book.resume }}</p>
         <div class = "action-buttons">
           <button class="action-button" *ngIf="isLogged && ((currentUser && book.auteurId === currentUser.id) || (currentUser && currentUser.role === 'admin'))">Modifier</button>

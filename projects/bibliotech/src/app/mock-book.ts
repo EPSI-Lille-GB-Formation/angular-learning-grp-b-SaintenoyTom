@@ -35,7 +35,7 @@ export const BOOKS: Book [] = [
         id: 4,
         title: "Le Seigneur des Anneaux",
         resume: "Après un prologue décrivant les Hobbits et leurs mœurs, le passé de la Terre du Milieu et un rapide résumé des aventures de Bilbon Sacquet...",
-        image: "Book4.png",
+        image: "https://m.media-amazon.com/images/I/711wTudJGtL._AC_UF1000,1000_QL80_.jpg",
         createdAt: new Date(),
         updatedAt: null,
         categorieId: [2],

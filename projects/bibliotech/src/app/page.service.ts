@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Page } from './page';
-import { Observable, catchError } from 'rxjs';
+import { Observable, catchError, forkJoin, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -16,6 +16,19 @@ export class PageService {
     return this.http.get<Page[]>(url).pipe(
       catchError(error => {
         console.error('PageService - Erreur lors de la récupération des pages :', error);
+        throw error;
+      })
+    );
+  }
+
+  updatePages(pages: Page[]): Observable<void> {
+    const updateRequests: Observable<void>[] = pages.map(page =>
+      this.http.put<void>(`${this.userUrl}/${page.id}`, page)
+    );
+    return forkJoin(updateRequests).pipe(
+      map(() => {}),
+      catchError(error => {
+        console.error('Erreur lors de la mise à jour des pages :', error);
         throw error;
       })
     );

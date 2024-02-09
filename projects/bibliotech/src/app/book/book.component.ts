@@ -20,18 +20,13 @@ import { Users } from '../users';
   <button (click)="return()">Retour</button>
   </div>
   <div class="container" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-  <h1>{{this.book?.title}}</h1>
-  <div class="categories">
-  <h2 style ="margin-bottom=0;">Catégories du livre : </h2>
-    <table>
-      <tbody>
-        <tr *ngIf="book && categoriesList">
-          <ng-container *ngFor="let category of categoriesList">
-            <td *ngIf="book.categorieId?.includes(category.id)">{{ category.label }}</td>
-          </ng-container>
-        </tr>
-      </tbody>
-    </table>
+  <h1>{{ book?.title }}</h1>
+  <div class="categories" style="display: flex; align-items: center;">
+    <h2 style="margin-right: 20px;" >Catégories du livre :</h2>
+    <p>{{ getCategoryLabels(book?.categorieId) }}</p>
+  </div>
+  <div>
+    <button *ngIf="this.currentUser?.id === this.book?.auteurId || this.currentUser?.role === 'admin'" (click)="editBook()">Modifier le livre</button>
   </div>
   <div class="pages">
     <p> {{this.pages[currentPageId].content}} </p>
@@ -110,6 +105,11 @@ export class BookComponent {
     return this.categoriesList.find(category => category.id === categoryId);
   }
 
+  getCategoryLabels(categoryIds: number[] | undefined): string {
+    if (!categoryIds) return '';
+    return categoryIds.map(id => this.getCategoryById(id)?.label || '').join(', ');
+  }
+
   previousPage(): void {
     if (this.currentPageId > 0) {
         this.currentPageId--;
@@ -125,5 +125,10 @@ nextPage(): void {
   return(): void{
     localStorage.setItem('user_logged', JSON.stringify(this.currentUser));
     this.router.navigate(['/main-page']);
+  }
+
+  editBook(): void{
+    localStorage.setItem('user_logged', JSON.stringify(this.currentUser));
+    this.router.navigate(['/book', this.book?.id, 'modify']);
   }
 }

@@ -1,0 +1,12 @@
+.pages {
+    width: 500px;
+    height: 550px;
+    border: 1px solid black
+  }
+
+  .navigation-buttons{
+    width: 40%;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+  }
