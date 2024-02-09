@@ -95,7 +95,7 @@ export const PAGES: Page [] = [
         content: "Voici ma premiere page yeehaaa",
         createdAt: new Date(),
         updatedAt: null,
-        bookId: 10
+        bookId: 7
     },
     {
         id: 13,
