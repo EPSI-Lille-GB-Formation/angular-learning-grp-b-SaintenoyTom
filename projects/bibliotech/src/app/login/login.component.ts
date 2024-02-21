@@ -11,7 +11,7 @@ import { UserService } from '../user.service';
   imports: [CommonModule, FormsModule],
   template: `
   <div class = "container">
-  <label for="username">Nom d'utilisateur:</label>
+  <label for="username">Email:</label>
   <input type="text" id="username" [(ngModel)]="email" (keyup.enter)="login()" />
 
   <label for="password">Mot de passe:</label>
